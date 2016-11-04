@@ -5,6 +5,7 @@
  */
 package dhz.skz.umjeravanje.dto;
 
+import dhz.skz.aqdb.entity.DozvoljeneGranice;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
@@ -13,8 +14,9 @@ import javax.xml.bind.annotation.XmlType;
  *
  * @author kraljevic
  */
-@XmlType(propOrder={"naziv", "tocka_norme","oznaka", "dozvoljene_granice", "vrijednost"})
+@XmlType(propOrder = {"naziv", "tocka_norme", "oznaka", "dozvoljene_granice", "vrijednost"})
 public class IspitnaVelicina {
+
     @NotNull
     Integer id;
     @NotNull
@@ -96,5 +98,69 @@ public class IspitnaVelicina {
         this.komponenta = komponenta;
     }
 
-    
+    public static IspitnaVelicina create(DozvoljeneGranice dg) {
+        IspitnaVelicina i = new IspitnaVelicina();
+        i.setId(dg.getDozvoljeneGranicePK().getIspitneVelicineId());
+        i.setKomponenta(dg.getKomponentaId().getFormula());
+        i.setNaziv(dg.getIspitneVelicine().getNaziv());
+        i.setTocka_norme("nema tocke norme");
+        i.setOznaka(dg.getIspitneVelicine().getOznaka());
+        i.setDozvoljene_granice(new Interval(dg.getMin(), dg.getMax(), dg.getMjerneJediniceId().getOznaka()));
+        i.setVrijednost(null);
+        return i;
+    }
+
+    public static class Builder {
+
+        private Integer id;
+        private String komponenta;
+        private String naziv;
+        private String tocka_norme;
+        private String oznaka;
+        private Interval dozvoljene_granice;
+        private Velicina vrijednost;
+
+        public Builder() {
+        }
+
+        public Builder setId(Integer id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder setKomponenta(String komponenta) {
+            this.komponenta = komponenta;
+            return this;
+        }
+
+        public Builder setNaziv(String naziv) {
+            this.naziv = naziv;
+            return this;
+        }
+
+        public Builder setTocka_norme(String tocka_norme) {
+            this.tocka_norme = tocka_norme;
+            return this;
+        }
+
+        public Builder setOznaka(String oznaka) {
+            this.oznaka = oznaka;
+            return this;
+        }
+
+        public Builder setDozvoljene_granice(Interval dozvoljene_granice) {
+            this.dozvoljene_granice = dozvoljene_granice;
+            return this;
+        }
+
+        public Builder setVrijednost(Velicina vrijednost) {
+            this.vrijednost = vrijednost;
+            return this;
+        }
+
+        public IspitnaVelicina build() {
+            return new IspitnaVelicina(id, komponenta, naziv, tocka_norme, oznaka, dozvoljene_granice, vrijednost);
+        }
+    }
+
 }

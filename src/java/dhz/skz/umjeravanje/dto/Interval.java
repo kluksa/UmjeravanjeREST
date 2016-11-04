@@ -18,16 +18,12 @@ public class Interval {
 
     public Interval() {
     }
-    
-    
 
     public Interval(Double min, Double max, String jedinica) {
         this.min = min;
         this.max = max;
         this.jedinica = jedinica;
     }
-    
-
     
     public Double getMin() {
         return min;
@@ -53,6 +49,4 @@ public class Interval {
     public void setJedinica(String jedinica) {
         this.jedinica = jedinica;
     }
-    
-    
 }

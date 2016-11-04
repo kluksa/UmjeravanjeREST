@@ -5,9 +5,6 @@
  */
 package dhz.skz.umjeravanje.dto;
 
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 /**
@@ -53,4 +50,11 @@ public class Oprema {
         this.proizvodjac = proizvodjac;
     }
     
+    public static Oprema create(dhz.skz.aqdb.entity.Uredjaj u){
+        Oprema o = new Oprema();
+        o.setOznaka(u.getSerijskaOznaka());
+        o.setNaziv(u.getModelUredjajaId().getOznakaModela());
+        o.setProizvodjac(u.getModelUredjajaId().getProizvodjacId().getNaziv());
+        return o;
+    }
 }

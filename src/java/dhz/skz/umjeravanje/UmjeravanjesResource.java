@@ -34,18 +34,22 @@ public class UmjeravanjesResource {
     }
 
     /**
-     * Retrieves representation of an instance of dhz.skz.umjeravanje.UmjeravanjesResource
-     * @return an instance of java.util.List<dhz.skz.umjeravanje.dto.Umjeravanje>
+     * Retrieves representation of an instance of
+     * dhz.skz.umjeravanje.UmjeravanjesResource
+     *
+     * @return an instance of
+     * java.util.List<dhz.skz.umjeravanje.dto.Umjeravanje>
      */
     @GET
     @Produces("application/xml")
-    public java.util.List<dhz.skz.umjeravanje.dto.Umjeravanje> getXml() {
+    public java.util.List<dhz.skz.umjeravanje.dto.Umjeravanje> getElementList() {
         //TODO return proper representation object
         throw new UnsupportedOperationException();
     }
 
     /**
      * POST method for creating an instance of UmjeravanjeResource
+     *
      * @param content representation for the new resource
      * @return an HTTP response with content of the created resource
      */

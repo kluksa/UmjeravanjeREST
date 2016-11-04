@@ -56,6 +56,4 @@ public class Mjeritelj {
     public void setPrezime(String prezime) {
         this.prezime = prezime;
     }
-    
-    
 }

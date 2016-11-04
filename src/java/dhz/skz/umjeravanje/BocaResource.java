@@ -7,45 +7,58 @@ package dhz.skz.umjeravanje;
 
 import dhz.skz.aqdb.facades.UredjajFacade;
 import dhz.skz.umjeravanje.dto.Boca;
-import dhz.skz.umjeravanje.dto.builders.BocaBuilder;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.naming.Context;
+import java.util.stream.Collectors;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
-import javax.ws.rs.PUT;
-import javax.ws.rs.DELETE;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 /**
  * REST Web Service
  *
  * @author kraljevic
  */
+@Path("/crm")
 public class BocaResource {
+
     UredjajFacade uredjajFacade = lookupUredjajFacadeBean();
-    
-    private String id;
+
+    @Context
+    private UriInfo context;
 
     /**
-     * Creates a new instance of BocaResource
+     * Creates a new instance of BocasResource
      */
-    private BocaResource(String id) {
-        this.id = id;
+    public BocaResource() {
     }
 
     /**
-     * Get instance of the BocaResource
+     * Retrieves representation of an instance of
+ dhz.skz.umjeravanje.BocaResource
+     *
+     * @return an instance of java.util.List<dhz.skz.umjeravanje.dto.Boca>
      */
-    public static BocaResource getInstance(String id) {
-        // The user may use some kind of persistence mechanism
-        // to store and restore instances of BocaResource class.
-        return new BocaResource(id);
+    @GET
+    @Produces("application/xml")
+    public java.util.List<dhz.skz.umjeravanje.dto.Boca> getElementList() {
+        return uredjajFacade.findAll().stream()
+                .filter(e -> true
+                        && Objects.nonNull(e)
+                        && Objects.nonNull(e.getEtalonBocaCollection())
+                        && !e.getEtalonBocaCollection().isEmpty()
+                )
+                .map(Boca::create)
+                .collect(Collectors.toList());
     }
 
     /**
@@ -55,38 +68,20 @@ public class BocaResource {
      * @return an instance of dhz.skz.umjeravanje.dto.Boca
      */
     @GET
+    @Path("{id}")
     @Produces("application/xml")
-    public Boca getXml() {
+    public Boca getElement(@PathParam("id") Integer id) {
         try {
-            return new BocaBuilder().build(uredjajFacade.find(Integer.parseInt(id)));
+            return Boca.create(uredjajFacade.find(id));
         } catch (NoSuchElementException ex) {
             Logger.getLogger(BocaResource.class.getName()).log(Level.SEVERE, null, ex);
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
     }
 
-    /**
-     * PUT method for updating or creating an instance of BocaResource
-     *
-     * @param content representation for the resource
-     */
-    @PUT
-    @Consumes("application/xml")
-    public void putXml(Boca content) {
-        throw new WebApplicationException(Response.Status.FORBIDDEN);
-    }
-
-    /**
-     * DELETE method for resource BocaResource
-     */
-    @DELETE
-    public void delete() {
-        throw new WebApplicationException(Response.Status.FORBIDDEN);
-    }
-
     private UredjajFacade lookupUredjajFacadeBean() {
         try {
-            Context c = new InitialContext();
+            javax.naming.Context c = new InitialContext();
             return (UredjajFacade) c.lookup("java:global/SKZ/SKZ-ejb/UredjajFacade!dhz.skz.aqdb.facades.UredjajFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);

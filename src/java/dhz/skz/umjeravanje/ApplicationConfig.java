@@ -23,21 +23,18 @@ public class ApplicationConfig extends Application {
     }
 
     /**
-     * Do not modify addRestResourceClasses() method.
-     * It is automatically populated with
-     * all resources defined in the project.
-     * If required, comment out calling this method in getClasses().
+     * Do not modify addRestResourceClasses() method. It is automatically
+     * populated with all resources defined in the project. If required, comment
+     * out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(dhz.skz.umjeravanje.BocaResource.class);
-        resources.add(dhz.skz.umjeravanje.BocasResource.class);
-        resources.add(dhz.skz.umjeravanje.CistiZraksResource.class);
-        resources.add(dhz.skz.umjeravanje.DilucijskasResource.class);
+        resources.add(dhz.skz.umjeravanje.CistiZrakResource.class);
+        resources.add(dhz.skz.umjeravanje.DilucijskaResource.class);
         resources.add(dhz.skz.umjeravanje.MetodaResource.class);
-        resources.add(dhz.skz.umjeravanje.MetodasResource.class);
+        resources.add(dhz.skz.umjeravanje.UmjeravanjeResource.class);
         resources.add(dhz.skz.umjeravanje.UmjeravanjesResource.class);
         resources.add(dhz.skz.umjeravanje.UredjajResource.class);
-        resources.add(dhz.skz.umjeravanje.UredjajsResource.class);
     }
-    
+
 }

@@ -6,35 +6,34 @@
 package dhz.skz.umjeravanje.dto;
 
 import java.util.Date;
-import java.util.List;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 /**
- * 
+ *
  *
  * @author kraljevic
- 
-
-
-
-	<brojObrasca>string</brojObrasca>
-	<revizija>string</revizija>
-	<postaja>string</postaja>
-
-
-</XMLumjeravanje>
-*/
+ *
+ *
+ *
+ *
+ * <brojObrasca>string</brojObrasca>
+ * <revizija>string</revizija>
+ * <postaja>string</postaja>
+ *
+ *
+ */
 @XmlRootElement
-@XmlType(propOrder={"oznaka_izvjesca","datum", "uredjaj","postaja","rezultati", "dilucija", "crm", "cisti_zrak","mjeritelj","okolisni_uvjeti","napomena"})
+@XmlType(propOrder = {"oznaka_izvjesca", "datum", "uredjaj", "postaja", "rezultati", "dilucija", "crm", "cisti_zrak", "mjeritelj", "okolisni_uvjeti", "napomena"})
 
 public class Umjeravanje {
+
     Integer id;
     Uredjaj uredjaj;
     Metoda rezultati;
-    Dilucijska dilucija; 
-    Boca crm; 
+    Dilucijska dilucija;
+    Boca crm;
     CistiZrak cisti_zrak;
     Mjeritelj mjeritelj;
     String oznaka_izvjesca;
@@ -43,7 +42,7 @@ public class Umjeravanje {
     OkolisniUvjeti okolisni_uvjeti;
     String napomena;
 
-    public Umjeravanje(Integer id, Uredjaj uredjaj, Metoda metoda, Dilucijska dilucija, Boca boca, CistiZrak cisti_zrak, Mjeritelj mjeritelj, 
+    public Umjeravanje(Integer id, Uredjaj uredjaj, Metoda metoda, Dilucijska dilucija, Boca boca, CistiZrak cisti_zrak, Mjeritelj mjeritelj,
             String oznaka_izvjesca, String postaja, Date datum, OkolisniUvjeti okolisni_uvjeti, String napomena) {
         this.id = id;
         this.uredjaj = uredjaj;
@@ -158,4 +157,88 @@ public class Umjeravanje {
     public void setNapomena(String napomena) {
         this.napomena = napomena;
     }
+
+    public static class Builder {
+
+        private Integer id;
+        private Uredjaj uredjaj;
+        private Metoda metoda_id;
+        private Dilucijska dilucija_id;
+        private Boca boca_id;
+        private CistiZrak cisti_zrak_id;
+        private Mjeritelj mjeritelj_id;
+        private String oznaka_izvjesca;
+        private String postaja;
+        private Date datum;
+        private OkolisniUvjeti okolisni_uvjeti;
+        private String napomena;
+
+        public Builder() {
+        }
+
+        public Builder setId(Integer id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder setUredjaj(Uredjaj uredjaj) {
+            this.uredjaj = uredjaj;
+            return this;
+        }
+
+        public Builder setMetoda_id(Metoda metoda_id) {
+            this.metoda_id = metoda_id;
+            return this;
+        }
+
+        public Builder setDilucija_id(Dilucijska dilucija_id) {
+            this.dilucija_id = dilucija_id;
+            return this;
+        }
+
+        public Builder setBoca_id(Boca boca_id) {
+            this.boca_id = boca_id;
+            return this;
+        }
+
+        public Builder setCisti_zrak_id(CistiZrak cisti_zrak_id) {
+            this.cisti_zrak_id = cisti_zrak_id;
+            return this;
+        }
+
+        public Builder setMjeritelj_id(Mjeritelj mjeritelj_id) {
+            this.mjeritelj_id = mjeritelj_id;
+            return this;
+        }
+
+        public Builder setOznaka_izvjesca(String oznaka_izvjesca) {
+            this.oznaka_izvjesca = oznaka_izvjesca;
+            return this;
+        }
+
+        public Builder setPostaja(String postaja) {
+            this.postaja = postaja;
+            return this;
+        }
+
+        public Builder setDatum(Date datum) {
+            this.datum = datum;
+            return this;
+        }
+
+        public Builder setOkolisni_uvjeti(OkolisniUvjeti okolisni_uvjeti) {
+            this.okolisni_uvjeti = okolisni_uvjeti;
+            return this;
+        }
+
+        public Builder setNapomena(String napomena) {
+            this.napomena = napomena;
+            return this;
+        }
+
+        public Umjeravanje build() {
+            return new Umjeravanje(id, uredjaj, metoda_id, dilucija_id, boca_id, cisti_zrak_id, mjeritelj_id, oznaka_izvjesca, postaja, datum, okolisni_uvjeti, napomena);
+        }
+    }
+
 }

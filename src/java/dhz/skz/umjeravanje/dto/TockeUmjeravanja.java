@@ -5,6 +5,8 @@
  */
 package dhz.skz.umjeravanje.dto;
 
+import dhz.skz.aqdb.entity.AnalitickeMetode;
+import dhz.skz.aqdb.entity.MetodaUmjerneTocke;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
@@ -13,8 +15,9 @@ import javax.xml.bind.annotation.XmlType;
  *
  * @author kraljevic
  */
-@XmlType(propOrder={"c_ref","c", "u"})
+@XmlType(propOrder = {"c_ref", "c", "u"})
 public class TockeUmjeravanja {
+
     String komponenta;
     Double c_ref;
     Double c;
@@ -75,6 +78,53 @@ public class TockeUmjeravanja {
         this.mjerne_jedinice = mjerne_jedinice;
     }
 
-    
-    
+    public static TockeUmjeravanja create(MetodaUmjerneTocke ut) {
+        TockeUmjeravanja t = new TockeUmjeravanja();
+        t.setKomponenta(ut.getKomponentaId().getFormula());
+        t.setC_ref(1. * ut.getPostotakOpsega());
+        t.setMjerne_jedinice("%");
+        return t;
+    }
+
+    public static  class Builder {
+
+        private String komponenta;
+        private Double c_ref;
+        private Double c;
+        private Double u;
+        private String mjerne_jedinice;
+
+        public Builder() {
+        }
+
+        public Builder setKomponenta(String komponenta) {
+            this.komponenta = komponenta;
+            return this;
+        }
+
+        public Builder setC_ref(Double c_ref) {
+            this.c_ref = c_ref;
+            return this;
+        }
+
+        public Builder setC(Double c) {
+            this.c = c;
+            return this;
+        }
+
+        public Builder setU(Double u) {
+            this.u = u;
+            return this;
+        }
+
+        public Builder setMjerne_jedinice(String mjerne_jedinice) {
+            this.mjerne_jedinice = mjerne_jedinice;
+            return this;
+        }
+
+        public TockeUmjeravanja build() {
+            return new TockeUmjeravanja(komponenta, c_ref, c, u, mjerne_jedinice);
+        }
+    }
+
 }

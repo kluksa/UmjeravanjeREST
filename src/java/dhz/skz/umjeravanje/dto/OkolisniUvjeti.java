@@ -10,6 +10,7 @@ package dhz.skz.umjeravanje.dto;
  * @author kraljevic
  */
 public class OkolisniUvjeti {
+
     Velicina temperatura;
     Velicina tlak;
     Velicina relativna_vlaga;
@@ -46,4 +47,34 @@ public class OkolisniUvjeti {
     public void setRelativna_vlaga(Velicina relativna_vlaga) {
         this.relativna_vlaga = relativna_vlaga;
     }
+
+    public static class Builder {
+
+        private Velicina temperatura;
+        private Velicina tlak;
+        private Velicina relativna_vlaga;
+
+        public Builder() {
+        }
+
+        public Builder setTemperatura(Velicina temperatura) {
+            this.temperatura = temperatura;
+            return this;
+        }
+
+        public Builder setTlak(Velicina tlak) {
+            this.tlak = tlak;
+            return this;
+        }
+
+        public Builder setRelativna_vlaga(Velicina relativna_vlaga) {
+            this.relativna_vlaga = relativna_vlaga;
+            return this;
+        }
+
+        public OkolisniUvjeti build() {
+            return new OkolisniUvjeti(temperatura, tlak, relativna_vlaga);
+        }
+    }
+
 }

@@ -5,20 +5,17 @@
  */
 package dhz.skz.umjeravanje;
 
+import dhz.skz.umjeravanje.dto.Boca;
+import dhz.skz.umjeravanje.dto.CistiZrak;
+import dhz.skz.umjeravanje.dto.Dilucijska;
 import dhz.skz.umjeravanje.dto.IspitnaVelicina;
+import dhz.skz.umjeravanje.dto.Metoda;
 import dhz.skz.umjeravanje.dto.Mjeritelj;
+import dhz.skz.umjeravanje.dto.OkolisniUvjeti;
 import dhz.skz.umjeravanje.dto.TockeUmjeravanja;
 import dhz.skz.umjeravanje.dto.Umjeravanje;
+import dhz.skz.umjeravanje.dto.Uredjaj;
 import dhz.skz.umjeravanje.dto.Velicina;
-import dhz.skz.umjeravanje.dto.builders.BocaBuilder;
-import dhz.skz.umjeravanje.dto.builders.CistiZrakBuilder;
-import dhz.skz.umjeravanje.dto.builders.DilucijskaBuilder;
-import dhz.skz.umjeravanje.dto.builders.IspitnaVelicinaBuilder;
-import dhz.skz.umjeravanje.dto.builders.MetodaBuilder;
-import dhz.skz.umjeravanje.dto.builders.OkolisniUvjetiBuilder;
-import dhz.skz.umjeravanje.dto.builders.TockeUmjeravanjaBuilder;
-import dhz.skz.umjeravanje.dto.builders.UmjeravanjeBuilder;
-import dhz.skz.umjeravanje.dto.builders.UredjajBuilder;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.ws.rs.Consumes;
@@ -62,28 +59,28 @@ public class UmjeravanjeResource {
      */
     @GET
     @Produces("application/xml")
-    public Umjeravanje getXml() {
-        return new UmjeravanjeBuilder()
-                .setBoca_id(new BocaBuilder()
+    public Umjeravanje getElement() {
+        return new Umjeravanje.Builder()
+                .setBoca_id(new Boca.Builder()
                         .setId(36)
                         .build())
-                .setCisti_zrak_id(new CistiZrakBuilder()
+                .setCisti_zrak_id(new CistiZrak.Builder()
                         .setId(36)
                         .build())
                 .setDatum(new Date())
-                .setDilucija_id(new DilucijskaBuilder()
+                .setDilucija_id(new Dilucijska.Builder()
                         .setId(37)
                         .build())
-                .setMetoda_id(new MetodaBuilder()
+                .setMetoda_id(new Metoda.Builder()
                         .setId(38)
                         .setKomponente(new ArrayList<IspitnaVelicina>() {
                             {
-                                add(new IspitnaVelicinaBuilder()
+                                add(new IspitnaVelicina.Builder()
                                         .setId(123)
                                         .setKomponenta("NOl")
                                         .setVrijednost(new Velicina(11., "nmol/mol"))
                                         .build());
-                                add(new IspitnaVelicinaBuilder()
+                                add(new IspitnaVelicina.Builder()
                                         .setId(13)
                                         .setKomponenta("xNOl")
                                         .setVrijednost(new Velicina(101., "nmol/mol"))
@@ -93,28 +90,28 @@ public class UmjeravanjeResource {
                         })
                         .setPredlozene_tocke(new ArrayList<TockeUmjeravanja>() {
                             {
-                                add(new TockeUmjeravanjaBuilder()
+                                add(new TockeUmjeravanja.Builder()
                                         .setC_ref(123.)
                                         .setC(123.4)
                                         .setKomponenta("SO7")
                                         .setMjerne_jedinice("nmol/mol")
                                         .setU(11.2)
                                         .build());
-                                add(new TockeUmjeravanjaBuilder()
+                                add(new TockeUmjeravanja.Builder()
                                         .setC_ref(3.)
                                         .setC(3.4)
                                         .setKomponenta("SO7")
                                         .setMjerne_jedinice("nmol/mol")
                                         .setU(0.2)
                                         .build());
-                                add(new TockeUmjeravanjaBuilder()
+                                add(new TockeUmjeravanja.Builder()
                                         .setC_ref(123.)
                                         .setC(123.4)
                                         .setKomponenta("SO9")
                                         .setMjerne_jedinice("nmol/mol")
                                         .setU(11.2)
                                         .build());
-                                add(new TockeUmjeravanjaBuilder()
+                                add(new TockeUmjeravanja.Builder()
                                         .setC_ref(3.)
                                         .setC(3.4)
                                         .setKomponenta("SO9")
@@ -126,13 +123,13 @@ public class UmjeravanjeResource {
                         .build())
                 .setMjeritelj_id(new Mjeritelj(12345))
                 .setNapomena("Napomena")
-                .setOkolisni_uvjeti(new OkolisniUvjetiBuilder()
+                .setOkolisni_uvjeti(new OkolisniUvjeti.Builder()
                         .setRelativna_vlaga(new Velicina(90., "%"))
                         .setTemperatura(new Velicina(10., "C"))
                         .setTlak(new Velicina(1000., "hPa"))
                         .build())
                 .setPostaja("Postaja")
-                .setUredjaj(new UredjajBuilder()
+                .setUredjaj(new Uredjaj.Builder()
                         .setId(123)
                         .createUredjaj())
                 .build();

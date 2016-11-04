@@ -5,7 +5,9 @@
  */
 package dhz.skz.umjeravanje.dto;
 
+import dhz.skz.aqdb.entity.AnalitickeMetode;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -15,6 +17,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement
 public class Metoda {
+
     Integer id;
     String naziv;
     String oznaka_norme;
@@ -31,7 +34,7 @@ public class Metoda {
         this.ispitne_velicine = ispitne_velicine;
         this.tocke_umjeravanja = predlozene_tocke;
     }
-    
+
     @XmlAttribute
     public Integer getId() {
         return id;
@@ -72,5 +75,61 @@ public class Metoda {
     public void setTocke_umjeravanja(List<TockeUmjeravanja> tocke_umjeravanja) {
         this.tocke_umjeravanja = tocke_umjeravanja;
     }
-    
+
+    public static Metoda create(AnalitickeMetode am) {
+        Metoda m = new Metoda();
+        m.setId(am.getId());
+        m.setNaziv(am.getNaziv());
+        m.setOznaka_norme(am.getNorma());
+        m.setTocke_umjeravanja(am.getMetodaUmjerneTockeCollection().stream()
+                .map(TockeUmjeravanja::create)
+                .collect(Collectors.toList()));
+        m.setIspitne_velicine(am.getDozvoljeneGraniceCollection().stream()
+                .map(IspitnaVelicina::create)
+                .collect(Collectors.toList()));
+        return m;
+
+    }
+
+    public static class Builder {
+
+        private Integer id;
+        private String naziv;
+        private String oznaka_norme;
+        private List<IspitnaVelicina> ispitne_velicine;
+        private List<TockeUmjeravanja> tocke_umjeravanja;
+
+        public Builder() {
+        }
+
+        public Builder setId(Integer id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder setNaziv(String naziv) {
+            this.naziv = naziv;
+            return this;
+        }
+
+        public Builder setOznaka_norme(String oznaka_norme) {
+            this.oznaka_norme = oznaka_norme;
+            return this;
+        }
+
+        public Builder setKomponente(List<IspitnaVelicina> ispitne_velicine) {
+            this.ispitne_velicine = ispitne_velicine;
+            return this;
+        }
+
+        public Builder setPredlozene_tocke(List<TockeUmjeravanja> tocke_umjeravanja) {
+            this.tocke_umjeravanja = tocke_umjeravanja;
+            return this;
+        }
+
+        public Metoda build() {
+            return new Metoda(id, naziv, oznaka_norme, ispitne_velicine, tocke_umjeravanja);
+        }
+    }
+
 }
